@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
+
+class Transaction extends Controller
+{
+    
+    public function index()
+    {
+
+        DB::transaction(function (){
+
+            try {
+                User::where('id',12)->update([
+                    'name' => 'shark updated 2'
+                ]);
+                User::where('id',aaa)->update([
+                    'name' => 'any value'
+                ]);
+            }catch (\Exception $exception){
+                DB::rollBack();
+                dd($exception->getPrevious());
+            }
+        },5);
+
+        try {
+
+            DB::beginTransaction();
+
+            User::where('id',12)->update([
+                'name' => 'shark updated 2'
+            ]);
+
+            User::where('id',aaa)->update([
+                'name' => 'any value'
+            ]);
+
+            DB::commit();
+
+        }catch (\Exception $exception){
+
+            DB::rollBack();
+            dd($exception->getMessage());
+        }
+
+
+        dd('stop');
+    }
+
+}
