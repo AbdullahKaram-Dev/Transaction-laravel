@@ -1,0 +1,41 @@
+$connection = DB::connection('another');
+    $users = $connection->table('users')->get();
+    $users = $connection->table('users')->pluck('email');
+
+    $users = $connection->table('users')->where('name','shark')->first();
+    $users = $connection->table('users')->where('name','shark')->first()->name;
+    $users = $connection->table('users')->where('name','shark')->value('name');
+
+
+    $users = $connection->table('users')->find(12,['name','email']);
+    $users = $connection->table('users')->find(12);
+
+    $users = $connection->table('users')
+                        ->select('name as user_name',
+                                         'email as user_email')
+                        ->first();
+
+    /** distinct here for unique values of name */
+    $users = $connection->table('users')->select('name')->distinct()->get();
+
+    $users = $connection->table('users')->select('name')
+                        ->where('name','=','shark')->get();
+
+    $users = $connection->table('users')->count();
+    /**  the greatest value of id in table user */
+    $users = $connection->table('users')->max('id');
+
+    $users = $connection->table('roles')->sum('id');
+
+    $users = $connection->table('users')->where('id','<=',20)->get();
+
+
+    $users = $connection->table('users')
+                        ->where('id',11)
+                        ->orWhere(function ($query){
+                             $query->where('name','shark')
+                                   ->orWhere('id',11);
+                        })->get();
+
+
+    dd($users);
