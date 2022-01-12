@@ -1,0 +1,12 @@
+$connection = DB::connection('another');
+    $colors = $connection->table('colors')->whereJsonContains('name->en','Black')
+                        ->get();
+
+    /** another example */
+
+    $connection = DB::connection('another');
+    $colors = $connection->table('colors')->where('name->en','Red')
+                        ->get();
+
+
+    dd($colors);
