@@ -1,0 +1,17 @@
+ $connection = DB::connection('another');
+    $users = $connection->table('users')
+        ->simplePaginate(50);
+
+
+    $connection = DB::connection('another');
+    $users = $connection->table('users')
+        ->paginate(50);
+
+
+
+    //return redirect($users->url(2));
+
+    dd($users->previousPageUrl());
+
+
+    //return view('welcome');
