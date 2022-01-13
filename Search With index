@@ -1,0 +1,18 @@
+    /** create first index for column users.name to make search faster */
+    //$connection = DB::connection('another');
+    //$users = DB::statement('ALTER TABLE users ADD FULLTEXT name(name)');
+
+
+    /** second make search */
+    $users = DB::table('users')
+                ->whereRaw("MATCH(name) AGAINST(? IN BOOLEAN MODE)", ['sayed'])
+                ->get();
+
+    $name = 'sayed';
+    $users = DB::table('users')
+        ->where('name','like','%'.$name.'%')
+        ->get();
+
+
+
+    dd($users);
